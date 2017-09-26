@@ -5,10 +5,6 @@ app.controller("formController",["$scope","$http", function(scope,http){
 	scope.getForm = function(){
 		scope.isloading = true;
 		scope.isFormDisplay = false;
-		var req = {
-			method: "get",
-		    url: "destination.com"
-		};
 		http.get("https://randomform.herokuapp.com/").then(function(res){
 			scope.isFormDisplay = true;
 			scope.isloading = false;
