@@ -1,0 +1,37 @@
+*{box-sizing:border-box;}
+body, html { height:100%; overflow-x:hidden}
+body {
+    color: #404041;
+    font-family: Arial, Georgia, "Times New Roman";
+    font-size: 14px;
+    padding: 0px;
+    margin: 0px;
+    background-color: #f2f2f2;
+}
+.container {
+    background-color: #fff;
+    min-height: 600px;
+    padding: 30px;
+}
+header h2 {
+    font-family: georgia;
+    text-align: center;
+}
+.content{
+	padding:20px;
+}
+.loading{
+	/*position: absolute;
+	top: 550;
+	left: 650;*/
+	text-align: center;
+	margin: auto auto;
+}
+.button{
+	margin: 15px;
+	padding: 7px;
+	border-radius: 2px;
+}
+.checkbox{
+	margin-left:15px;
+}

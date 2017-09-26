@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Skilleza test</title>	
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<link rel="stylesheet" href="style.css" />		
+	  	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+	  	<script src="app.js"></script>
+	</head>
+	<body ng-app="testApp">
+		<div class="container" ng-controller = "formController"> 
+			<header>
+				<h2>Skillenza test</h2>
+			</header>
+			<div class="content">
+				<input type="button" class="button" ng-click="getForm()" value="GET FORM" />
+				<div  ng-if="isloading" class="loading">
+					<img src="loading.gif" alt="Loading"/>
+				</div>
+				<form id = "{{id}}" name = "{{name}}"  ng-if="isFormDisplay">
+					 <div ng-repeat="field in fields">
+	        			<div ng-if="field.component == 'textinput'" class="form-group">
+							<label class="col-form-label">{{field.label}}</label>
+							<input type="text" class="form-control" ng-model="field.value" ng-value="{{field.autofill}}" value="field.value" ng-init="field.value=field.autofill" ng-required="{{field.required}}" ng-disabled="field.editable == false" ng-pattern="{{field.validation}}"/>
+	        			</div>
+	        			<div ng-if="field.component == 'textarea'" class="form-group">
+							<label class="col-form-label">{{field.label}}</label>
+							<textarea class="form-control" ng-model="field.value" ng-value="{{field.autofill}}" value="field.value" ng-init="field.value=field.autofill" ng-required="{{field.required}}" ng-disabled="field.editable == false" ng-pattern="{{field.validation}}"/></textarea>
+	        			</div> 
+	        			<div ng-if="field.component == 'checkbox'" class="form-group">
+	    					<label class="col-form-label">{{field.label}}</label>
+	    					<div class="checkbox" ng-repeat="opt in field.options"  ng-required="{{field.required}}">
+			                    <input type="checkbox" ng-model="field.value" id="{{opt}}" ng-value="opt"  ng-disabled="field.editable == false" ng-init="field.value=field.autoselect" ng-click="checkOption($parent.$index,opt)">{{opt}}
+			                </div>
+	        			</div>
+	        			<div ng-if="field.component=='select'" class="form-group" >
+	      					<label class="control-label">{{field.label}}</label>
+	        				<select class="form-control" ng-model="field.value" ng-init="field.value=field.autoselect" ng-options="opt for opt in field.options track by opt"  ng-required="{{field.required}}" ng-disabled="field.editable == false">   
+	 
+	        				</select>
+	    				</div>
+	        			<div ng-if="field.component=='radio'" class="form-group" >
+	      					<label class="control-label">{{field.label}}</label>
+	        				<div ng-repeat="opt in field.options" ng-required="{{field.required}}">              
+	            				<label class="radio-inline"><input type="radio" ng-model="field.value" id="{{opt}}"  ng-disabled="field.editable == false" ng-value="opt" ng-checked="opt == field.autoselect" ng-init="field.value=field.autoselect">{{opt}}</label>
+	                		</div>
+				    	</div>
+				     </div>
+				     <input type="submit" class="button" value="SUBMIT FORM" ng-click="submitForm()" >
+				</form>
+			</div>
+		</div>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	</body>
+</html>
