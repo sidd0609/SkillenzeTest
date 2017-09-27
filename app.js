@@ -2,9 +2,14 @@ var app = angular.module("testApp",[]);
 app.controller("formController",["$scope","$http", function(scope,http){
 	scope.isFormDisplay = false;
 	scope.fields;
+	scope.isloading = false;
 	scope.getForm = function(){
 		scope.isloading = true;
 		scope.isFormDisplay = false;
+		var req = {
+			method: "get",
+		    url: "destination.com"
+		};
 		http.get("https://randomform.herokuapp.com/").then(function(res){
 			scope.isFormDisplay = true;
 			scope.isloading = false;
@@ -15,22 +20,23 @@ app.controller("formController",["$scope","$http", function(scope,http){
 			scope.fields = formdata.form_fields;
  		});
 	}
-	scope.checkOption = function(index, opt){
-		if(scope.fields[index].component == 'checkbox'){
-			scope.fields[index].value.push(opt);
-		};
-
+	scope.isChecked = function(index,opt){
+		var match = false;
+		if(scope.fields[index].autoselect){
+	      	for(var i=0 ; i < scope.fields[index].autoselect.length ; i++) {
+			if(scope.fields[index].autoselect[i]== opt){
+				match = true;
+			}
+	      	}
+	    }
+	    return match;
 	}
 	scope.submitForm = function(){
 		var sendObj = {};
-		tempArray = [];
-		angular.forEach(scope.fields, function(val, key) {
-			var temp = {};
-  			temp.label = val.label;
-  			temp.data = val.value;
-  			tempArray.push(temp);  	
-  		});
-  		sendObj.data = JSON.parse(JSON.stringify(tempArray));
+		sendObj.data = {};
+		for(i=0;i<scope.fields.length;i++){
+			sendObj.data[scope.fields[i].label] = scope.fields[i].value;
+  		}
   		sendObj.success = 'true';
   		console.log("submit data /; "+JSON.stringify(sendObj));
   		var req = {
@@ -42,7 +48,7 @@ app.controller("formController",["$scope","$http", function(scope,http){
 	        }
 		};
 		
-		http.post(req).then(function(){
+		http.post('https://randomform.herokuapp.com/submit',sendObj).then(function(){
 			console.log("successfull submitted");
 		});
 	}
