@@ -17,7 +17,7 @@
 				<div  ng-if="isloading" class="loading">
 					<img src="loading.gif" alt="Loading"/>
 				</div>
-				<form id = "{{id}}" name = "{{name}}"  ng-if="isFormDisplay">
+				<form id = "{{id}}" name = "newForm"  ng-if="isFormDisplay" >
 					 <div ng-repeat="field in fields">
 	        			<div ng-if="field.component == 'textinput'" class="form-group">
 							<label class="col-form-label">{{field.label}}</label>
@@ -29,8 +29,8 @@
 	        			</div> 
 	        			<div ng-if="field.component == 'checkbox'" class="form-group">
 	    					<label class="col-form-label">{{field.label}}</label>
-	    					<div class="checkbox" ng-repeat="opt in field.options" ng-init="field.value=field.autoselect" ng-required="{{field.required}}">
-			                    <input type="checkbox" ng-model="field.value" ng-value="opt"  ng-disabled="field.editable == false" ng-true-value="'{{opt}}'" ng-false-value="''" ng-checked="isChecked($parent.$index,opt)">{{opt}}
+	    					<div class="checkbox" ng-repeat="opt in field.options" ng-required="{{field.required}}" ng-init="field.value=field.autoselect" > 
+	    						<input type="checkbox" ng-model="field.value[$index]"  ng-disabled="field.editable == false" ng-true-value="'{{opt}}'" ng-false-value="" ng-checked="isChecked($parent.$index,opt)">{{opt}} 
 			                </div>
 	        			</div>
 	        			<div ng-if="field.component=='select'" class="form-group" >
@@ -41,13 +41,13 @@
 	    				</div>
 	        			<div ng-if="field.component=='radio'" class="form-group" >
 	      					<label class="control-label">{{field.label}}</label>
-	        				<div ng-repeat="opt in field.options" ng-required="{{field.required}}" ng-init="field.value=field.autoselect">              
-	            				<label class="radio-inline"><input type="radio" ng-model="field.value" id="{{opt}}"  ng-disabled="field.editable == false" ng-value="opt" ng-checked="isChecked($parent.$index,opt)">{{opt}}</label>
+	        				<div ng-repeat="opt in field.options"  ng-init="field.value=field.autoselect">              
+	            				<input type="radio" ng-model="field.value" ng-disabled="field.editable == false" ng-value="opt" ng-checked="isChecked($parent.$index,opt)" ng-required="{{field.required}}">{{opt}}
 	                		</div>
 				    	</div>
 				     </div>
-				     <input type="submit" class="button" value="SUBMIT FORM" ng-click="submitForm()" >
-				</form>
+				     
+				     <input type="submit" class="button" value="SUBMIT FORM" ng-disabled="newForm.$invalid"ng-click="submitForm()"/>
 			</div>
 		</div>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
