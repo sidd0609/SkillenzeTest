@@ -35,3 +35,6 @@ header h2 {
 .checkbox{
 	margin-left:15px;
 }
+input[disabled] {
+    cursor: not-allowed !important;
+}
